@@ -12,54 +12,45 @@ import javax.crypto.KeyGenerator;
 
 public class MainClass {
     public static void main(String[] args) throws Exception {
-        //Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-        byte[] input = "testtesttesttest".getBytes();
 
+        //MakeFile.GenerateFile(66666, "1MBfile", "Iam1MBsizefile ");
+        //MakeFile.GenerateFile(5882353, "100MBfile", "Iam100MBsizefile ");
+        //MakeFile.GenerateFile(29411765, "200MBfile", "Iam200MBsizefile ");
 
-        var keyGen = KeyGenerator.getInstance("AES");
-        keyGen.init(128);
-        var secretKey = keyGen.generateKey();
-
-        byte[] keyBytes = new byte[] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09,
-                0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17 };
-        byte[] ivBytes = new byte[] { 0x00, 0x01, 0x02, 0x03, 0x00, 0x01, 0x02, 0x03, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x01 };
-
-        SecretKeySpec key = new SecretKeySpec(keyBytes, "AES");
-        IvParameterSpec ivSpec = new IvParameterSpec(ivBytes);
-
-        String mode = "ECB", outputName = "resultECB";
-        System.out.println("[ECB] Encrypted: "); //sprawdzic czy dzieli sie przez 16
-        InputOutput.encMode(keyBytes, ivBytes, mode, outputName);
+        String mode = "ECB", outputName = "resultECB", fileName="200MBfile";
+        System.out.println("[ECB] Encrypted: ");
+        InputOutput.encMode(mode, outputName, fileName);
         System.out.println("[ECB] Decrypted: ");
-        InputOutput.decMode(keyBytes, ivBytes, mode, outputName);
+        InputOutput.decMode(mode, outputName);
 
         mode = "CBC";
         outputName = "resultCBC";
-        System.out.println("[CBC] Encrypted: "); //sprawdzic czy dzieli sie przez 16
-        InputOutput.encMode(keyBytes, ivBytes, mode, outputName);
+        System.out.println("[CBC] Encrypted: ");
+        InputOutput.encMode(mode, outputName, fileName);
         System.out.println("[CBC] Decrypted: ");
-        InputOutput.decMode(keyBytes, ivBytes, mode, outputName);
+        InputOutput.decMode(mode, outputName);
 
         mode = "OFB";
         outputName = "resultOFB";
         System.out.println("[OFB] Encrypted: ");
-        InputOutput.encMode(keyBytes, ivBytes, mode, outputName);
+        InputOutput.encMode(mode, outputName, fileName);
         System.out.println("[OFB] Decrypted: ");
-        InputOutput.decMode(keyBytes, ivBytes, mode, outputName);
+        InputOutput.decMode(mode, outputName);
 
         mode = "CFB";
         outputName = "resultCFB";
         System.out.println("[CFB] Encrypted: ");
-        InputOutput.encMode(keyBytes, ivBytes, mode, outputName);
+        InputOutput.encMode(mode, outputName, fileName);
         System.out.println("[CFB]Decrypted: ");
-        InputOutput.decMode(keyBytes, ivBytes, mode, outputName);
+        InputOutput.decMode(mode, outputName);
 
         mode = "CTR";
         outputName = "resultCTR";
         System.out.println("[CTR] Encrypted: ");
-        InputOutput.encMode(keyBytes, ivBytes, mode, outputName);
+        InputOutput.encMode(mode, outputName, fileName);
         System.out.println("[CTR] Decrypted: ");
-        InputOutput.decMode(keyBytes, ivBytes, mode, outputName);
+        InputOutput.decMode(mode, outputName);
+        //MakeFile.GenerateFile(11764705, "200MBfile", "Iam200MBsizefile ");
+        //Tests.Test();
     }
 }
