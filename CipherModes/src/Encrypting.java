@@ -6,6 +6,7 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -13,13 +14,12 @@ import javax.crypto.spec.SecretKeySpec;
 public class Encrypting {
     private static final String key = "aesEncryptionKey";
     private static final String initVector = "encryptionIntVec";
-    public static String Encrypt(String input, String mode) throws Exception
+    public static byte[] Encrypt(String input, String mode) throws Exception
     {
         IvParameterSpec ivSpec = new IvParameterSpec(initVector.getBytes("UTF-8"));
         SecretKeySpec keySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
         Cipher cipher;
 
-        //System.out.println("input : " + new String(input));
         switch (mode){
             case "ECB":
                 cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
@@ -48,7 +48,9 @@ public class Encrypting {
                 break;
         }
 
-        byte[] encrypted = cipher.doFinal(input.getBytes());
-        return Base64.getEncoder().encodeToString(encrypted);
+        if(mode == "ECB")
+            return cipher.doFinal(input.getBytes());
+        else
+            return cipher.doFinal(input.getBytes("UTF-8"));
     }
 }

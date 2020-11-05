@@ -7,6 +7,7 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -14,7 +15,8 @@ import javax.crypto.spec.SecretKeySpec;
 public class Decrypting {
     private static final String key = "aesEncryptionKey";
     private static final String initVector = "encryptionIntVec";
-    public static String Decrypt(String encrypted, String mode) throws Exception{
+
+    public static String Decrypt(byte[] encrypted, String mode) throws Exception{
         IvParameterSpec ivSpec = new IvParameterSpec(initVector.getBytes("UTF-8"));
         SecretKeySpec keySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
         Cipher cipher;
@@ -48,8 +50,11 @@ public class Decrypting {
                 break;
         }
 
-        byte[] original = cipher.doFinal(Base64.getDecoder().decode(encrypted));
+        return byteArrayToString(cipher.doFinal(encrypted));
+    }
 
-        return new String(original);
+    private static String byteArrayToString(byte[] encrypted) {
+        String decryptedMessage = new String(encrypted);
+        return decryptedMessage;
     }
 }
